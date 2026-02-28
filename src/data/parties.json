@@ -1,0 +1,132 @@
+[
+  {
+    "id": "dmk",
+    "name": "Dravida Munnetra Kazhagam",
+    "abbr": "DMK",
+    "leader": "M. K. Stalin",
+    "symbol": "Rising Sun",
+    "color": "border-red-600",
+    "bg": "bg-red-50",
+    "description": "Advocating for social justice, state autonomy, and Dravidian ideology.",
+    "focus": {
+      "welfare": 90,
+      "infrastructure": 75,
+      "ideology": 95,
+      "nationalism": 40
+    },
+    "achievements": [
+      { "title": "Kalaignar Magalir Urimai Thogai", "desc": "Monthly financial assistance for women heads of families." },
+      { "title": "Free Bus Travel for Women", "desc": "Zero-cost travel for women in town buses across the state." },
+      { "title": "Naan Mudhalvan", "desc": "Skill development scheme for students." }
+    ],
+    "controversies": [
+      { "title": "Senthil Balaji Case", "desc": "ED arrest regarding cash-for-jobs scam.", "source": "Supreme Court / ED Files" },
+      { "title": "Drug Menace Allegations", "desc": "Opposition claims of rising drug availability.", "source": "News Reports" }
+    ],
+    "keywords": ["DMK", "Stalin", "Udhayanidhi", "Dravida"]
+  },
+  {
+    "id": "aiadmk",
+    "name": "All India Anna Dravida Munnetra Kazhagam",
+    "abbr": "AIADMK",
+    "leader": "Edappadi K. Palaniswami",
+    "symbol": "Two Leaves",
+    "color": "border-green-600",
+    "bg": "bg-green-50",
+    "description": "Focusing on welfare populism, law and order, and infrastructure.",
+    "focus": {
+      "welfare": 85,
+      "infrastructure": 80,
+      "ideology": 60,
+      "nationalism": 50
+    },
+    "achievements": [
+      { "title": "Amma Canteens", "desc": "Low-cost food canteens for the poor." },
+      { "title": "Kudimaramathu Scheme", "desc": "Restoration of water bodies with community participation." },
+      { "title": "11 Medical Colleges", "desc": "Established 11 new medical colleges in a single year." }
+    ],
+    "controversies": [
+      { "title": "Kodanad Estate Heist", "desc": "Mystery surrounding the break-in and murders.", "source": "Police Investigation" },
+      { "title": "Internal Leadership Tussle", "desc": "Legal battles over party leadership.", "source": "Madras High Court" }
+    ],
+    "keywords": ["AIADMK", "EPS", "Palaniswami", "Two Leaves"]
+  },
+  {
+    "id": "bjp",
+    "name": "Bharatiya Janata Party",
+    "abbr": "BJP",
+    "leader": "K. Annamalai",
+    "symbol": "Lotus",
+    "color": "border-orange-500",
+    "bg": "bg-orange-50",
+    "description": "Promoting nationalism, development, and spiritual heritage.",
+    "focus": {
+      "welfare": 60,
+      "infrastructure": 85,
+      "ideology": 90,
+      "nationalism": 95
+    },
+    "achievements": [
+      { "title": "Infrastructure Push", "desc": "Expansion of highways and Vande Bharat trains in TN." },
+      { "title": "Jal Jeevan Mission", "desc": "Implementation of tap water connections in rural areas." },
+      { "title": "En Mann En Makkal", "desc": "State-wide padayatra to connect with voters." }
+    ],
+    "controversies": [
+      { "title": "Hindi Imposition Allegations", "desc": "Criticism over language policy.", "source": "Public Discourse" },
+      { "title": "NEET Controversy", "desc": "Support for NEET despite state opposition.", "source": "Policy Debate" }
+    ],
+    "keywords": ["BJP", "Annamalai", "Modi", "Lotus"]
+  },
+  {
+    "id": "ntk",
+    "name": "Naam Tamilar Katchi",
+    "abbr": "NTK",
+    "leader": "Seeman",
+    "symbol": "Mike",
+    "color": "border-red-800",
+    "bg": "bg-red-50",
+    "description": "Tamil nationalism, environmentalism, and alternative politics.",
+    "focus": {
+      "welfare": 70,
+      "infrastructure": 40,
+      "ideology": 95,
+      "nationalism": 90
+    },
+    "achievements": [
+      { "title": "Green Politics", "desc": "Strong advocacy for environmental protection and water management." },
+      { "title": "50% Women Quota", "desc": "Consistently fielding 50% women candidates in elections." },
+      { "title": "Agriculture Focus", "desc": "Promotion of organic farming and native crops." }
+    ],
+    "controversies": [
+      { "title": "Controversial Speeches", "desc": "Allegations of inciting speech.", "source": "Police Cases" },
+      { "title": "Symbol Allocation Issue", "desc": "Legal battle over the Sugarcane Farmer symbol.", "source": "Election Commission" }
+    ],
+    "keywords": ["NTK", "Seeman", "Naam Tamilar", "Tamil Nationalism"]
+  },
+  {
+    "id": "tvk",
+    "name": "Tamizhaga Vettri Kazhagam",
+    "abbr": "TVK",
+    "leader": "Vijay",
+    "symbol": "Flag (Yellow/Red)",
+    "color": "border-yellow-500",
+    "bg": "bg-yellow-50",
+    "description": "Emerging force focusing on youth, education, and corruption-free governance.",
+    "focus": {
+      "welfare": 80,
+      "infrastructure": 60,
+      "ideology": 70,
+      "nationalism": 60
+    },
+    "achievements": [
+      { "title": "Education Awards", "desc": "Recognizing and rewarding top-performing students." },
+      { "title": "Flood Relief", "desc": "Active participation in flood relief activities." },
+      { "title": "Party Launch", "desc": "Successful launch and massive state conference." }
+    ],
+    "controversies": [
+      { "title": "Policy Ambiguity", "desc": "Criticism regarding lack of detailed policy framework.", "source": "Political Analysts" },
+      { "title": "Flag Controversy", "desc": "Objections raised against the party flag design.", "source": "News Reports" }
+    ],
+    "keywords": ["TVK", "Vijay", "Thalapathy", "Tamizhaga Vettri Kazhagam"]
+  }
+]
