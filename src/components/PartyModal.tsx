@@ -17,21 +17,47 @@ export default function PartyModal({ party, isOpen, onClose }: PartyModalProps) 
     const [activeTab, setActiveTab] = useState<Tab>("overview");
     const [news, setNews] = useState<any[]>([]);
     const [loadingNews, setLoadingNews] = useState(false);
+    const [selectedDistrict, setSelectedDistrict] = useState("All Districts");
+    const [page, setPage] = useState(1);
+    const [hasMoreNews, setHasMoreNews] = useState(true);
+
+    const TAMIL_NADU_DISTRICTS = [
+        "All Districts", "Ariyalur", "Chengalpattu", "Chennai", "Coimbatore", "Cuddalore",
+        "Dharmapuri", "Dindigul", "Erode", "Kallakurichi", "Kanchipuram", "Kanyakumari",
+        "Karur", "Krishnagiri", "Madurai", "Mayiladuthurai", "Nagapattinam", "Namakkal",
+        "Nilgiris", "Perambalur", "Pudukkottai", "Ramanathapuram", "Ranipet", "Salem",
+        "Sivaganga", "Tenkasi", "Thanjavur", "Theni", "Thoothukudi", "Tiruchirappalli",
+        "Tirunelveli", "Tirupathur", "Tiruppur", "Tiruvallur", "Tiruvarur", "Vellore",
+        "Viluppuram", "Virudhunagar"
+    ];
 
     useEffect(() => {
         if (isOpen && party) {
             setActiveTab("overview");
-            fetchNews(party.keywords);
+            setNews([]);
+            setPage(1);
+            setSelectedDistrict("All Districts");
+            fetchNews(party.keywords, 1, "All Districts", true);
         }
     }, [isOpen, party]);
 
-    const fetchNews = async (keywords: string[]) => {
+    const fetchNews = async (keywords: string[], currentPage: number, district: string, resetNews = false) => {
         setLoadingNews(true);
         try {
             const query = keywords.join(",");
-            const res = await fetch(`/api/news?q=${encodeURIComponent(query)}`);
+            let url = `/api/news?q=${encodeURIComponent(query)}&page=${currentPage}`;
+            if (district !== "All Districts") {
+                url += `&district=${encodeURIComponent(district)}`;
+            }
+            const res = await fetch(url);
             const data = await res.json();
-            setNews(data.items || []);
+
+            if (resetNews) {
+                setNews(data.items || []);
+            } else {
+                setNews(prev => [...prev, ...(data.items || [])]);
+            }
+            setHasMoreNews(data.hasMore || false);
         } catch (error) {
             console.error("Failed to fetch news", error);
         } finally {
@@ -136,26 +162,62 @@ export default function PartyModal({ party, isOpen, onClose }: PartyModalProps) 
 
                     {activeTab === "news" && (
                         <div className="space-y-4">
-                            {loadingNews ? (
-                                <div className="text-center py-10 text-slate-500 animate-pulse">Fetching latest headlines...</div>
-                            ) : news.length > 0 ? (
-                                news.map((item, idx) => (
-                                    <a
-                                        key={idx}
-                                        href={item.link}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="block p-4 rounded-lg border border-slate-100 hover:border-blue-200 hover:bg-blue-50 transition-all group"
-                                    >
-                                        <h4 className="font-semibold text-slate-800 group-hover:text-blue-700 mb-1">{item.title}</h4>
-                                        <p className="text-sm text-slate-500 flex items-center gap-2">
-                                            {item.source} • {new Date(item.pubDate).toLocaleDateString()}
-                                            <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
-                                        </p>
-                                    </a>
-                                ))
+                            <div className="mb-4">
+                                <label htmlFor="district-select" className="block text-sm font-medium text-slate-700 mb-2">Filter by District:</label>
+                                <select
+                                    id="district-select"
+                                    value={selectedDistrict}
+                                    onChange={(e) => {
+                                        const newDistrict = e.target.value;
+                                        setSelectedDistrict(newDistrict);
+                                        setPage(1);
+                                        if (party) fetchNews(party.keywords, 1, newDistrict, true);
+                                    }}
+                                    className="block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-slate-900 ring-1 ring-inset ring-slate-300 focus:ring-2 focus:ring-blue-600 sm:text-sm sm:leading-6"
+                                >
+                                    {TAMIL_NADU_DISTRICTS.map(district => (
+                                        <option key={district} value={district}>{district}</option>
+                                    ))}
+                                </select>
+                            </div>
+
+                            {news.length > 0 ? (
+                                <>
+                                    {news.map((item, idx) => (
+                                        <a
+                                            key={idx}
+                                            href={item.link}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="block p-4 rounded-lg border border-slate-100 hover:border-blue-200 hover:bg-blue-50 transition-all group"
+                                        >
+                                            <h4 className="font-semibold text-slate-800 group-hover:text-blue-700 mb-1">{item.title}</h4>
+                                            <p className="text-sm text-slate-500 flex items-center gap-2">
+                                                {item.source} • {new Date(item.pubDate).toLocaleDateString()}
+                                                <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                            </p>
+                                        </a>
+                                    ))}
+                                    {hasMoreNews && (
+                                        <button
+                                            onClick={() => {
+                                                const nextPage = page + 1;
+                                                setPage(nextPage);
+                                                if (party) fetchNews(party.keywords, nextPage, selectedDistrict, false);
+                                            }}
+                                            disabled={loadingNews}
+                                            className="w-full py-2 mt-4 text-sm font-semibold text-blue-600 border border-blue-200 rounded-lg hover:bg-blue-50 disabled:opacity-50"
+                                        >
+                                            {loadingNews ? "Loading more..." : "Load More News"}
+                                        </button>
+                                    )}
+                                </>
                             ) : (
-                                <div className="text-center py-10 text-slate-500">No recent news found.</div>
+                                !loadingNews && <div className="text-center py-10 text-slate-500">No recent news found.</div>
+                            )}
+
+                            {loadingNews && news.length === 0 && (
+                                <div className="text-center py-10 text-slate-500 animate-pulse">Fetching latest headlines...</div>
                             )}
                         </div>
                     )}
@@ -205,8 +267,8 @@ function TabButton({ active, onClick, icon, label }: { active: boolean; onClick:
         <button
             onClick={onClick}
             className={`flex items-center gap-2 px-6 py-4 text-sm font-medium transition-colors whitespace-nowrap border-b-2 ${active
-                    ? "border-blue-600 text-blue-700 bg-blue-50/50"
-                    : "border-transparent text-slate-500 hover:text-slate-700 hover:bg-slate-100"
+                ? "border-blue-600 text-blue-700 bg-blue-50/50"
+                : "border-transparent text-slate-500 hover:text-slate-700 hover:bg-slate-100"
                 }`}
         >
             {icon}
